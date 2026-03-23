@@ -2,6 +2,9 @@ package pl.coderslab.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name="books")
 public class Book {
@@ -16,8 +19,19 @@ public class Book {
     @ManyToOne
     private Publisher publisher;
 
+    @ManyToMany
+    private List<Author> authors = new ArrayList<>();
+
     @ManyToOne
     private Category category;
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
+    }
 
     public Category getCategory() {
         return category;
