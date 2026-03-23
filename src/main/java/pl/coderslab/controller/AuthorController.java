@@ -2,20 +2,50 @@ package pl.coderslab.controller;
 
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.coderslab.entity.Author;
 import pl.coderslab.dao.AuthorDao;
+import pl.coderslab.repository.AuthorRepository;
+
+import java.util.stream.Collectors;
 
 @Controller
 public class AuthorController {
 
     private final AuthorDao authorDao;
+    private final AuthorRepository authorRepository;
 
-    public AuthorController(AuthorDao authorDao) {
+    public AuthorController(AuthorDao authorDao, AuthorRepository authorRepository) {
         this.authorDao =  authorDao;
+        this.authorRepository = authorRepository;
     }
+
+
+    @GetMapping("/author/by-email")
+    @ResponseBody
+    public String getByEmail() {
+        Author author = authorRepository.findByEmail("michkow@gmail.com");
+        return author != null ? author.toString() : "brak autora";
+    }
+
+    @GetMapping("/author/by-pesel")
+    @ResponseBody
+    public String getByPesel() {
+        Author author = authorRepository.findByPesel("12345677");
+        return author != null ? author.toString() : "brak autora";
+    }
+
+    @GetMapping("/author/by-lastname")
+    @ResponseBody
+    public String getByLastName() {
+        return authorRepository.findAllByLastName("Nowak").stream()
+                .map(Author::toString)
+                .collect(Collectors.joining(", "));
+    }
+
 
     @RequestMapping("/author/add")
     @ResponseBody

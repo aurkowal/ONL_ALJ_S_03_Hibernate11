@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.dao.AuthorDao;
 import pl.coderslab.entity.Author;
+import pl.coderslab.entity.Category;
 import pl.coderslab.repository.BookRepository;
 import pl.coderslab.dao.PublisherDao;
 import pl.coderslab.entity.Book;
@@ -32,22 +33,57 @@ public class BookController {
     }
 
 
-    @GetMapping("/book/test-repo-1")
+
+
+    @GetMapping("/book/get-allby-category")
     @ResponseBody
-    public String test() {
+    public String getAllByCategory() {
         return bookRepository.findAllByCategoryId(2L)
                 .stream().map(Book::getTitle)
                 .collect(Collectors.joining(", "));
     }
 
-    @GetMapping("/book/test-repo-2")
+    @GetMapping("/book/get-allby-category-id")
     @ResponseBody
-    public String test2() {
+    public String getAllByCategoryId() {
 
         return bookRepository.findAllByCategory(categoryRepository.findById(1L).get())
                 .stream().map(Book::getTitle)
                 .collect(Collectors.joining(", "));
     }
+
+    @GetMapping("/book/get-allby-title")
+    @ResponseBody
+    public String getAllByTitle() {
+
+        return bookRepository.findAllByTitle("Harry Potter").stream().map(Book::getTitle).collect(Collectors.joining(", "));
+    }
+
+    @GetMapping("/book/get-allby-rating")
+    @ResponseBody
+    public String getAllByRating() {
+
+        return bookRepository.findAllByRating(10).stream().map(Book::getTitle).collect(Collectors.joining(", "));
+    }
+
+    //AUTOR???
+
+
+    @GetMapping("/book/get-allby-publisher")
+    @ResponseBody
+    public String getAllByPublisher() {
+        return bookRepository.findAllByPublisher(publisherDao.findById(7)).stream().map(Book::getTitle).collect(Collectors.joining(", "));
+    }
+
+    @GetMapping("/book/first-by-category")
+    @ResponseBody
+    public String firstByCategory() {
+        Book book = bookRepository.findFirstByCategoryIdOrderByTitleAsc(1L);
+        return book != null ? book.getTitle() : "brak książek";
+    }
+
+
+
 
 
     @GetMapping("/book/add-with-publisher")
