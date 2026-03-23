@@ -16,6 +16,17 @@ public class Book {
     @ManyToOne
     private Publisher publisher;
 
+    @ManyToOne
+    private Category category;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public Publisher getPublisher() {
         return publisher;
     }
@@ -58,6 +69,6 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Tytul: " + this.title + ", Opis: " + this.description;
+        return "Tytul: " + this.title + ", Opis: " + this.description + "Ocena: " + this.rating;
     }
 }
