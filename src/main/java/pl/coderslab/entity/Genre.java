@@ -4,17 +4,19 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
-@Table(name = "students")
+@Table(name = "genres")
 @Getter
 @Setter
-public class Student {
-
+public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String indexNumber;
-    private double averageGrade;
+    private String name;
+
+    @ManyToMany(mappedBy = "genres")
+    private List<Movie> movies;
+
 }
