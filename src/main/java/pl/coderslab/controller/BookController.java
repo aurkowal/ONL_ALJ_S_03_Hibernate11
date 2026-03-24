@@ -32,6 +32,44 @@ public class BookController {
         this.categoryRepository = categoryRepository;
     }
 
+    @GetMapping("/book/first-by-category-query")
+    @ResponseBody
+    public String firstByCategoryQuery() {
+        Book book = bookRepository.findFirstByCategoryIdOrderByTitleQuery(categoryRepository.findById(1L).get().getName());
+        return book != null ? book.getTitle() : "brak książek";
+    }
+
+    @GetMapping("/book/get-allby-publisher-query")
+    @ResponseBody
+    public String getAllByPublisherQuery() {
+        return bookRepository.findAllByPublisherQuery(publisherDao.findById(7)).stream().map(Book::getTitle).collect(Collectors.joining(", "));
+    }
+
+    @GetMapping("/book/get-allby-rating-between")
+    @ResponseBody
+    public String getAllByRatingBetweenParams() {
+
+        return bookRepository.findAllByRatingBetween3and5(3,5).stream().map(Book::getTitle).collect(Collectors.joining(", "));
+    }
+
+
+    @GetMapping("/book/get-allby-category-query")
+    @ResponseBody
+    public String getAllByCategoryQuery() {
+        return bookRepository.findAllByCategoryQuery(categoryRepository.findById(2L).get())
+                .stream().map(Book::getTitle)
+                .collect(Collectors.joining(", "));
+    }
+
+    @GetMapping("/book/get-allby-title-query")
+    @ResponseBody
+    public String getAllByTitleQuery() {
+
+        return bookRepository.findAllByTitleByQuery("Harry Potter").stream().map(Book::getTitle).collect(Collectors.joining(", "));
+    }
+
+
+// DAY 1
 
     @GetMapping("/book/get-allby-category")
     @ResponseBody
@@ -56,6 +94,7 @@ public class BookController {
 
         return bookRepository.findAllByTitle("Harry Potter").stream().map(Book::getTitle).collect(Collectors.joining(", "));
     }
+
 
     @GetMapping("/book/get-allby-rating")
     @ResponseBody

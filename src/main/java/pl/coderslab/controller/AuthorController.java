@@ -10,6 +10,7 @@ import pl.coderslab.entity.Author;
 import pl.coderslab.dao.AuthorDao;
 import pl.coderslab.repository.AuthorRepository;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -23,6 +24,22 @@ public class AuthorController {
         this.authorRepository = authorRepository;
     }
 
+
+    @GetMapping("/author/by-pesel-query")
+    @ResponseBody
+    public String getByPeselQuery() {
+        List<Author> authors = authorRepository.findAllByPeselContainingQuery("123");
+        return authors.toString();
+    }
+
+    @GetMapping("/author/by-email-query")
+    @ResponseBody
+    public String getByEmailQuery() {
+        List<Author> authors = authorRepository.findAllByEmailContainingQuery("mich");
+        return authors.toString();
+    }
+
+    //DAY 1
 
     @GetMapping("/author/by-email")
     @ResponseBody
