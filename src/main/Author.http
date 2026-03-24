@@ -1,0 +1,28 @@
+###
+GET http://localhost:8080/api/author/
+###
+GET http://localhost:8080/api/author/2
+###
+POST http://localhost:8080/api/author/
+Content-Type: application/json
+
+{
+  "firstName": "Kasia",
+  "lastName": "Kowalska",
+  "email": "kasia.kowalska@gmail.com",
+  "pesel": "9729384"
+}
+###
+PUT http://localhost:8080/api/author/6
+Content-Type: application/json
+
+{
+  "firstName": "Wiktoria",
+  "lastName": "Kwiatkowska",
+  "email": "wiki@gmail.com",
+  "pesel": "34435436"
+}
+
+###
+DELETE http://localhost:8080/api/author/7
+###

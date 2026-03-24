@@ -1,0 +1,17 @@
+###
+GET http://localhost:8080/api/publisher/
+###
+GET http://localhost:8080/api/publisher/3
+###
+POST http://localhost:8080/api/publisher/
+Content-Type: application/json
+
+{
+  "name": "Kasia",
+  "nip": "1298765",
+  "regon": "098765"
+}
+
+###
+DELETE http://localhost:8080/api/publisher/5
+###
