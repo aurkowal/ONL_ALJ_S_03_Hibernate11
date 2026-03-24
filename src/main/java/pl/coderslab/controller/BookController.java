@@ -33,8 +33,6 @@ public class BookController {
     }
 
 
-
-
     @GetMapping("/book/get-allby-category")
     @ResponseBody
     public String getAllByCategory() {
@@ -66,7 +64,17 @@ public class BookController {
         return bookRepository.findAllByRating(10).stream().map(Book::getTitle).collect(Collectors.joining(", "));
     }
 
-    //AUTOR???
+
+    @GetMapping("/book/get-allby-author")
+    @ResponseBody
+    public String getAllByAuthor() {
+        Author author = authorDao.findById(5);
+
+        return bookRepository.findAllByAuthors(author)
+                .stream()
+                .map(Book::getTitle)
+                .collect(Collectors.joining(", "));
+    }
 
 
     @GetMapping("/book/get-allby-publisher")
@@ -81,7 +89,6 @@ public class BookController {
         Book book = bookRepository.findFirstByCategoryIdOrderByTitleAsc(1L);
         return book != null ? book.getTitle() : "brak książek";
     }
-
 
 
 
